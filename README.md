@@ -1,2 +1,512 @@
 # FWD-PROJECT-EXPO
 EXPO
+<!DOCTYPE html>
+<html>
+<head>
+<title>College Academic Records Tracking System</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
+}
+
+/* LOGIN */
+
+#loginPage{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.login-box{
+background:#111827;
+padding:40px;
+border-radius:10px;
+width:320px;
+text-align:center;
+}
+
+.title{
+font-size:22px;
+color:#38bdf8;
+margin-bottom:15px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:5px;
+}
+
+button{
+padding:10px 15px;
+background:#38bdf8;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:#0ea5e9;
+}
+
+/* HEADER */
+
+.header{
+background:#111827;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+/* LOGOUT */
+
+.logout-btn{
+background:#38bdf8;
+border:none;
+padding:8px 15px;
+border-radius:5px;
+cursor:pointer;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:60px;
+left:0;
+width:220px;
+height:100%;
+background:#020617;
+padding-top:20px;
+}
+
+.sidebar a{
+display:block;
+padding:12px;
+color:white;
+text-decoration:none;
+cursor:pointer;
+}
+
+.sidebar a:hover{
+background:#38bdf8;
+color:black;
+}
+
+/* MAIN */
+
+.main{
+margin-left:220px;
+padding:20px;
+}
+
+.card{
+background:#111827;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#38bdf8;
+color:black;
+padding:10px;
+}
+
+td{
+background:#020617;
+padding:10px;
+border-bottom:1px solid #333;
+}
+
+.page{
+display:none;
+animation:fade 0.5s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="loginPage">
+
+<div class="login-box">
+
+<div class="title">College Academic Records System</div>
+
+<input id="username" placeholder="Username">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+</div>
+
+</div>
+
+<!-- SYSTEM -->
+
+<div id="system" style="display:none">
+
+<div class="header">
+<h2>Academic Records Portal</h2>
+<button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="sidebar">
+
+<a onclick="showPage('dashboard')">Dashboard</a>
+<a onclick="showPage('students')">Students</a>
+<a onclick="showPage('faculty')">Faculty</a>
+<a onclick="showPage('attendance')">Attendance</a>
+<a onclick="showPage('courses')">Courses</a>
+<a onclick="showPage('assignments')">Assignments</a>
+<a onclick="showPage('results')">Exam Results</a>
+<a onclick="showPage('timetable')">Timetable</a>
+
+</div>
+
+<div class="main">
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="page">
+
+<div class="card">
+<h3>Welcome</h3>
+<p>Academic Year : 2025-2026</p>
+<p>Semester : Even</p>
+</div>
+
+</div>
+
+<!-- STUDENTS -->
+
+<div id="students" class="page">
+
+<div class="card">
+
+<h3>Add Student</h3>
+
+<input id="sname" placeholder="Student Name">
+<input id="sid" placeholder="Student ID">
+<input id="sbranch" placeholder="Branch">
+
+<br><br>
+
+<button onclick="addStudent()">Add Student</button>
+
+</div>
+
+<div class="card">
+
+<h3>Student List</h3>
+
+<table id="studentTable">
+
+<tr>
+<th>Name</th>
+<th>ID</th>
+<th>Branch</th>
+<th>Action</th>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- FACULTY -->
+
+<div id="faculty" class="page">
+
+<div class="card">
+
+<h3>Faculty Members</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Subject</th>
+</tr>
+
+<tr><td>Dr Ravi Kumar</td><td>Data Structures</td></tr>
+<tr><td>Dr Anitha Sharma</td><td>Web Development</td></tr>
+<tr><td>Dr Suresh Reddy</td><td>Mathematics</td></tr>
+<tr><td>Dr Kavitha Rao</td><td>Operating Systems</td></tr>
+<tr><td>Dr Prakash Naidu</td><td>Database Systems</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ATTENDANCE -->
+
+<div id="attendance" class="page">
+
+<div class="card">
+
+<h3>Attendance</h3>
+
+<table>
+
+<tr>
+<th>Subject</th>
+<th>Total</th>
+<th>Present</th>
+<th>%</th>
+</tr>
+
+<tr><td>Data Structures</td><td>40</td><td>36</td><td>90%</td></tr>
+<tr><td>Web Development</td><td>38</td><td>34</td><td>89%</td></tr>
+<tr><td>Mathematics</td><td>35</td><td>30</td><td>85%</td></tr>
+
+</table>
+
+</div>
+
+<div class="card">
+
+<h3>Attendance Graph</h3>
+
+<canvas id="attendanceChart"></canvas>
+
+</div>
+
+</div>
+
+<!-- COURSES -->
+
+<div id="courses" class="page">
+
+<div class="card">
+
+<h3>Courses</h3>
+
+<ul>
+<li>Data Structures</li>
+<li>Web Development</li>
+<li>Mathematics</li>
+<li>Operating Systems</li>
+<li>Database Systems</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- ASSIGNMENTS -->
+
+<div id="assignments" class="page">
+
+<div class="card">
+
+<h3>Assignments</h3>
+
+<table>
+
+<tr>
+<th>Subject</th>
+<th>Task</th>
+<th>Status</th>
+</tr>
+
+<tr><td>Data Structures</td><td>Linked List Program</td><td>Submitted</td></tr>
+<tr><td>Web Development</td><td>HTML Website</td><td>Pending</td></tr>
+<tr><td>Mathematics</td><td>Matrix Problems</td><td>Submitted</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- RESULTS -->
+
+<div id="results" class="page">
+
+<div class="card">
+
+<h3>Exam Results</h3>
+
+<table>
+
+<tr>
+<th>Subject</th>
+<th>Marks</th>
+<th>Grade</th>
+</tr>
+
+<tr><td>Data Structures</td><td>88</td><td>A</td></tr>
+<tr><td>Web Development</td><td>92</td><td>A+</td></tr>
+<tr><td>Mathematics</td><td>80</td><td>A</td></tr>
+<tr><td>Operating Systems</td><td>84</td><td>A</td></tr>
+<tr><td>Database Systems</td><td>90</td><td>A+</td></tr>
+
+</table>
+
+</div>
+
+<div class="card">
+
+<h3>Result Distribution</h3>
+
+<canvas id="resultChart"></canvas>
+
+</div>
+
+</div>
+
+<!-- TIMETABLE -->
+
+<div id="timetable" class="page">
+
+<div class="card">
+
+<h3>Timetable</h3>
+
+<table>
+
+<tr>
+<th>Day</th>
+<th>P1</th>
+<th>P2</th>
+<th>P3</th>
+</tr>
+
+<tr><td>Monday</td><td>Data Structures</td><td>Math</td><td>Web Dev</td></tr>
+<tr><td>Tuesday</td><td>Web Dev</td><td>OS</td><td>DBMS</td></tr>
+<tr><td>Wednesday</td><td>Math</td><td>Data Structures</td><td>Web Dev</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function login(){
+
+let u=document.getElementById("username").value;
+let p=document.getElementById("password").value;
+
+if(u=="student" && p=="1234")
+{
+document.getElementById("loginPage").style.display="none";
+document.getElementById("system").style.display="block";
+showPage("dashboard");
+loadCharts();
+}
+else{
+alert("Invalid Login");
+}
+
+}
+
+function logout(){
+
+document.getElementById("system").style.display="none";
+document.getElementById("loginPage").style.display="flex";
+
+}
+
+function showPage(page){
+
+let pages=document.querySelectorAll(".page");
+
+pages.forEach(p=>p.style.display="none");
+
+document.getElementById(page).style.display="block";
+
+}
+
+function addStudent(){
+
+let name=document.getElementById("sname").value;
+let id=document.getElementById("sid").value;
+let branch=document.getElementById("sbranch").value;
+
+if(name==""||id==""||branch==""){
+alert("Enter all details");
+return;
+}
+
+let table=document.getElementById("studentTable");
+
+let row=table.insertRow();
+
+row.insertCell(0).innerHTML=name;
+row.insertCell(1).innerHTML=id;
+row.insertCell(2).innerHTML=branch;
+
+row.insertCell(3).innerHTML="<button onclick='deleteRow(this)'>Delete</button>";
+
+}
+
+function deleteRow(btn){
+btn.parentNode.parentNode.remove();
+}
+
+function loadCharts(){
+
+new Chart(document.getElementById("attendanceChart"),{
+type:"bar",
+data:{
+labels:["DS","Web","Math"],
+datasets:[{
+label:"Attendance %",
+data:[90,89,85]
+}]
+}
+});
+
+new Chart(document.getElementById("resultChart"),{
+type:"pie",
+data:{
+labels:["A+","A","B"],
+datasets:[{
+data:[2,2,1]
+}]
+}
+});
+
+}
+
+</script>
+
+</body>
+</html>
