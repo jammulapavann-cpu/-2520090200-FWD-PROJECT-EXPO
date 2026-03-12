@@ -1,0 +1,242 @@
+import java.util.Scanner;
+
+class Student
+{
+    String name;
+    String id;
+    String branch;
+
+    int dsaAttendance;
+    int maiAttendance;
+    int fwdAttendance;
+
+    int dsaMarks;
+    int maiMarks;
+    int fwdMarks;
+
+    Student(String name,String id,String branch)
+    {
+        this.name=name;
+        this.id=id;
+        this.branch=branch;
+    }
+
+    void showStudent()
+    {
+        System.out.println("Name: "+name);
+        System.out.println("ID: "+id);
+        System.out.println("Branch: "+branch);
+    }
+
+    void showAttendance()
+    {
+        System.out.println("\nAttendance:");
+        System.out.println("DSA: "+dsaAttendance+"%");
+        System.out.println("MAI: "+maiAttendance+"%");
+        System.out.println("FWD: "+fwdAttendance+"%");
+    }
+
+    void showMarks()
+    {
+        System.out.println("\nExam Results:");
+        System.out.println("DSA: "+dsaMarks);
+        System.out.println("MAI: "+maiMarks);
+        System.out.println("FWD: "+fwdMarks);
+
+        int total = dsaMarks + maiMarks + fwdMarks;
+        double percentage = total / 3.0;
+
+        System.out.println("Percentage: "+percentage+"%");
+    }
+}
+
+class Faculty
+{
+    String name;
+    String subject;
+
+    Faculty(String name,String subject)
+    {
+        this.name=name;
+        this.subject=subject;
+    }
+
+    void showFaculty()
+    {
+        System.out.println("Faculty: "+name+" Subject: "+subject);
+    }
+}
+
+public class CollegeAcademicRecordTrackingSystem
+{
+
+    static Scanner sc = new Scanner(System.in);
+
+    static Student students[] = new Student[100];
+    static Faculty faculty[] = new Faculty[20];
+
+    static int studentCount=0;
+    static int facultyCount=0;
+
+    public static void main(String args[])
+    {
+
+        int choice;
+
+        do{
+
+            System.out.println("\n===== COLLEGE ACADEMIC RECORD SYSTEM =====");
+
+            System.out.println("1 Add Student");
+            System.out.println("2 View Students");
+            System.out.println("3 Add Attendance");
+            System.out.println("4 View Attendance");
+            System.out.println("5 Add Exam Marks");
+            System.out.println("6 View Results");
+            System.out.println("7 Add Faculty");
+            System.out.println("8 View Faculty");
+            System.out.println("9 Exit");
+
+            System.out.print("Enter choice: ");
+            choice=sc.nextInt();
+            sc.nextLine();
+
+            switch(choice)
+            {
+                case 1: addStudent(); break;
+                case 2: viewStudents(); break;
+                case 3: addAttendance(); break;
+                case 4: viewAttendance(); break;
+                case 5: addMarks(); break;
+                case 6: viewResults(); break;
+                case 7: addFaculty(); break;
+                case 8: viewFaculty(); break;
+            }
+
+        }while(choice!=9);
+
+    }
+
+    static void addStudent()
+    {
+        System.out.print("Enter Name: ");
+        String name=sc.nextLine();
+
+        System.out.print("Enter ID: ");
+        String id=sc.nextLine();
+
+        System.out.print("Enter Branch: ");
+        String branch=sc.nextLine();
+
+        students[studentCount]=new Student(name,id,branch);
+
+        studentCount++;
+
+        System.out.println("Student Added Successfully");
+    }
+
+    static void viewStudents()
+    {
+        for(int i=0;i<studentCount;i++)
+        {
+            students[i].showStudent();
+            System.out.println("----------------");
+        }
+    }
+
+    static void addAttendance()
+    {
+        System.out.print("Enter Student ID: ");
+        String id=sc.nextLine();
+
+        for(int i=0;i<studentCount;i++)
+        {
+            if(students[i].id.equals(id))
+            {
+
+                System.out.print("Enter DSA Attendance %: ");
+                students[i].dsaAttendance=sc.nextInt();
+
+                System.out.print("Enter MAI Attendance %: ");
+                students[i].maiAttendance=sc.nextInt();
+
+                System.out.print("Enter FWD Attendance %: ");
+                students[i].fwdAttendance=sc.nextInt();
+
+                sc.nextLine();
+
+                return;
+            }
+        }
+
+        System.out.println("Student Not Found");
+    }
+
+    static void viewAttendance()
+    {
+        for(int i=0;i<studentCount;i++)
+        {
+            students[i].showAttendance();
+        }
+    }
+
+    static void addMarks()
+    {
+        System.out.print("Enter Student ID: ");
+        String id=sc.nextLine();
+
+        for(int i=0;i<studentCount;i++)
+        {
+            if(students[i].id.equals(id))
+            {
+
+                System.out.print("Enter DSA Marks: ");
+                students[i].dsaMarks=sc.nextInt();
+
+                System.out.print("Enter MAI Marks: ");
+                students[i].maiMarks=sc.nextInt();
+
+                System.out.print("Enter FWD Marks: ");
+                students[i].fwdMarks=sc.nextInt();
+
+                sc.nextLine();
+
+                return;
+            }
+        }
+
+        System.out.println("Student Not Found");
+    }
+
+    static void viewResults()
+    {
+        for(int i=0;i<studentCount;i++)
+        {
+            students[i].showMarks();
+        }
+    }
+
+    static void addFaculty()
+    {
+        System.out.print("Enter Faculty Name: ");
+        String name=sc.nextLine();
+
+        System.out.print("Enter Subject: ");
+        String subject=sc.nextLine();
+
+        faculty[facultyCount]=new Faculty(name,subject);
+
+        facultyCount++;
+
+        System.out.println("Faculty Added");
+    }
+
+    static void viewFaculty()
+    {
+        for(int i=0;i<facultyCount;i++)
+        {
+            faculty[i].showFaculty();
+        }
+    }
+
+}
